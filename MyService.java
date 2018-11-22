@@ -20,7 +20,8 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
         someTask();
-        return super.onStartCommand(intent, flags, startId);
+       // return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     public void onDestroy() {
@@ -37,15 +38,17 @@ public class MyService extends Service {
     void someTask() {
         new Thread(new Runnable() {
             public void run() {
-                for (int i = 1; i<=5; i++) {
-                    Log.d(LOG_TAG, "i = " + i);
+                int i=0;
+                while (true) {
+                    i++;
+                    Log.d(LOG_TAG, "i = "+ i);
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                stopSelf();
+
             }
         }).start();
     }
